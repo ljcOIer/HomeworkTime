@@ -1,0 +1,42 @@
+{
+    "测试中学":{
+        "admin":{
+            "admin":{
+                "name":"管理员",
+                "password":"admin123"
+            },
+            "lwf":{
+                "name":"lwf",
+                "password":"lwf123"
+            },
+            "lt":{
+                "name":"lt",
+                "password":"lt123"
+            }
+        },
+        "teacher":{
+            "maths":{
+                "name":"数学老师",
+                "password":"maths123",
+                "subjects":["maths"]
+            }
+        },
+        "student":{
+            "ljc":{
+                "name":"ljc",
+                "password":"ljc123",
+                "subjects":{"maths": 90},
+                "read_speed": 1,
+                "write_speed": 1
+            },
+            "ccc":{
+                "name":"ccc",
+                "password":"ccc123",
+                "subjects":{"maths": 90},
+                "read_speed": 1,
+                "write_speed": 1
+            }
+        }
+    },
+    "广州市第七中学":{}
+}

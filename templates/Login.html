@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Page Title</title>
+    <title>登录 | 作业时间估算</title>
 <link rel="stylesheet" href="/css/bootstrap.min.css" crossorigin="anonymous">
 <script src="/js/bootstrap.min.js" crossorigin="anonymous"></script>
     <style>
@@ -24,9 +24,9 @@
                     <div class="navbar-header">
                     <a class="navbar-brand" href="/">
                         <img alt="Brand" src="/img/logo.png" style="height: 25px;">
-                    </a>
+                    </a><p class="navbar-text navbar-left">作业时间估算</p>
                     </div>
-                    <p class="navbar-text navbar-left">作业时间估算</p>
+                    
                 </div>
             </div>
             <div class="col-md-3"></div>
@@ -42,9 +42,9 @@
                 <div class="form-group">
                     <label for="identity">选择身份</label>
                     <select class="form-control" id="identity" name="identity">
-                        <option value="student">我是学生</option>
-                        <option value="teacher" selected>我是教师</option>
-                        <option value="principal">我是主任</option>
+                        <option value="student" {% if identity and identity == "student" %}selected{% endif %}>我是学生</option>
+                        <option value="teacher" {% if identity and identity == "teacher" %}selected{% endif %}>我是教师</option>
+                        <option value="principal" {% if identity and identity == "principal" %}selected{% endif %}>我是主任</option>
                     </select>
                     <label for="schoolSelect">选择学校</label>
                     <select class="form-control" id="schoolSelect" name="school">
@@ -54,7 +54,7 @@
                                 - 如果传入了 default_school 且与当前学校名称匹配，则自动选中
                                 - 可根据实际需求调整匹配逻辑（比如用学校ID而非名称）
                             -->
-                            <option value="{{ school }}" {% if default_school and default_school == school %}selected{% endif %}>
+                            <option value="{{ school }}">
                                 {{ school }}
                             </option>
                         {% endfor %}
@@ -64,6 +64,7 @@
                     <label for="password">密码</label>
                     <input type="password" class="form-control" name="password" placeholder="请输入密码">
                 </div>
+                <p style="color:red">{{ error }}</p>
                 <button type="submit" class="btn btn-primary">提交</button>
             </form>
         </div>

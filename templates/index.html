@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Page Title</title>
+    <title>作业时间估算</title>
 <link rel="stylesheet" href="/css/bootstrap.min.css" crossorigin="anonymous">
 <script src="/js/bootstrap.min.js" crossorigin="anonymous"></script>
     <style>
@@ -24,9 +24,8 @@
                     <div class="navbar-header">
                     <a class="navbar-brand" href="#">
                         <img alt="Brand" src="/img/logo.png" style="height: 25px;">
-                    </a>
+                    </a><p class="navbar-text navbar-left">作业时间估算</p>
                     </div>
-                    <p class="navbar-text navbar-left">作业时间估算</p>
                 </div>
             </div>
             <div class="col-md-3"></div>
@@ -39,7 +38,7 @@
         <div class="jumbotron padding-individual" style="border-radius: 8px;">
             <h1>欢迎来到作业时间估算网站！</h1>
             <p>在这里，可以估算到您的作业时间，以便更好地规划您的学习时间。</p>
-            <p><a class="btn btn-primary btn-lg" href="#" role="button">登录</a>
+            <p><a class="btn btn-primary btn-lg" href="/login" role="button">登录</a>
             <a class="btn btn-default btn-lg" href="#" role="button">登记学校</a></p>
         </div>
         <div class="row">
@@ -47,14 +46,14 @@
           <div class="caption">
             <h3>对于学生</h3>
             <p>我们自动计算学生假期作业时间并展示给学生，帮助他们更合理地安排学习时间。</p>
-            <p><a class="btn btn-primary" href="#" role="button">学生登录</a></p>
+            <p><a class="btn btn-primary" href="/login?identity=student" role="button">学生登录</a></p>
           </div>
       </div>
       <div class="col-sm-6 col-md-4">
           <div class="caption">
             <h3>对于老师</h3>
             <p>我们为老师提供准确的作业时间估算，帮助他们更好地安排教学计划。</p>
-            <p><a class="btn btn-primary" href="#" role="button">老师登录</a></p>
+            <p><a class="btn btn-primary" href="/login?identity=teacher" role="button">老师登录</a></p>
           </div>
       </div>
 
@@ -62,7 +61,7 @@
             <div class="caption">
                 <h3>对于班主任</h3>
                 <p>我们为班主任提供详细的作业时间信息，帮助他们更好地了解学生的作业负担。</p>
-                <p><a class="btn btn-primary" href="#" role="button">主任登录</a></p>
+                <p><a class="btn btn-primary" href="/login?identity=principal" role="button">主任登录</a></p>
             </div>
         </div>
         </div>

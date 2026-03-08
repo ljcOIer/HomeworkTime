@@ -1,12 +1,14 @@
 # view.py
 from flask import Blueprint, render_template_string, render_template, request, redirect, session, Response, jsonify
 from flask_cors import CORS
-# from app.database import *
+from app.database import *
 
 app = Blueprint('view', __name__, url_prefix="")
 
 @app.route('/')
 def index():
+    if verify_cookies(request.cookies):
+        return redirect('/tasklist')
     return render_template('index.html')
 
 @app.route('/basic')
@@ -15,12 +17,21 @@ def basic():
 
 @app.route('/login')
 def login():
-    school_list = [
-        "广州市第七中学",
-        "广州市第一中学",
-        "广州市第二中学"
-    ]
-    
-    # 2. 设置默认选中的学校（可选，根据业务需求调整）
+    if verify_cookies(request.cookies):
+        return redirect('/tasklist')
+    school_list = SchoolListDATA.value
+    identity_param = request.args.get('identity')
     default_selected_school = "广州市第七中学"
-    return render_template('Login.html', SchoolList=school_list, default_school=default_selected_school)
+    return render_template('Login.html', SchoolList=school_list, default_school=default_selected_school,identity=identity_param,error="")
+
+@app.route('/tasklist')
+def tasklist():
+    if not verify_cookies(request.cookies):
+        return redirect('/')
+    return render_template('TaskList.html')
+
+@app.route('/task/<task_id>')
+def task_detail(task_id):
+    if not verify_cookies(request.cookies):
+        return redirect('/')
+    return render_template('TaskInformation.html', task_id=task_id)

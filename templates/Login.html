@@ -72,3 +72,77 @@
     <div class="col-md-4"></div>
 </body>
 </html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>登录 | 作业时间估算</title>
+<link rel="stylesheet" href="/css/bootstrap.min.css" crossorigin="anonymous">
+<script src="/js/bootstrap.min.js" crossorigin="anonymous"></script>
+    <style>
+        .padding-individual {
+            padding-top: 40px;    /* 文字与上边框距离 */
+            padding-right: 20px;  /* 文字与右边框距离 */
+            padding-bottom: 20px; /* 文字与下边框距离 */
+            padding-left: 20px;   /* 文字与左边框距离 */
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-default">
+        <div class="row">
+            <div class="col-md-3"></div>
+            <div class="col-md-6">
+                <div class="container-fluid">
+                    <div class="navbar-header">
+                    <a class="navbar-brand" href="/">
+                        <img alt="Brand" src="/img/logo.png" style="height: 25px;">
+                    </a><p class="navbar-text navbar-left">作业时间估算</p>
+                    </div>
+                    
+                </div>
+            </div>
+            <div class="col-md-3"></div>
+        </div>
+        
+    </nav>
+
+    <div class="col-md-4"></div>
+    <div class="col-md-4">
+        <div >
+            <h1 style="text-align: center">登录</h1>
+            <form method="post" action="/user/login">
+                <div class="form-group">
+                    <label for="identity">选择身份</label>
+                    <select class="form-control" id="identity" name="identity">
+                        <option value="student" {% if identity and identity == "student" %}selected{% endif %}>我是学生</option>
+                        <option value="teacher" {% if identity and identity == "teacher" %}selected{% endif %}>我是教师</option>
+                        <option value="principal" {% if identity and identity == "principal" %}selected{% endif %}>我是主任</option>
+                    </select>
+                    <label for="schoolSelect">选择学校</label>
+                    <select class="form-control" id="schoolSelect" name="school">
+                        {% for school in SchoolList %}
+                            <!-- 
+                                selected 参数：
+                                - 如果传入了 default_school 且与当前学校名称匹配，则自动选中
+                                - 可根据实际需求调整匹配逻辑（比如用学校ID而非名称）
+                            -->
+                            <option value="{{ school }}">
+                                {{ school }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                    <label for="username">用户名</label>
+                    <input type="text" class="form-control" name="username" placeholder="请输入用户名">
+                    <label for="password">密码</label>
+                    <input type="password" class="form-control" name="password" placeholder="请输入密码">
+                </div>
+                <p style="color:red">{{ error }}</p>
+                <button type="submit" class="btn btn-primary">提交</button>
+            </form>
+        </div>
+    </div>
+    <div class="col-md-4"></div>
+</body>
+</html>

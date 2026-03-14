@@ -7,7 +7,7 @@ static_folder   = 'static'
 template_folder = 'templates'
 
 from flask import Flask
-from app import user,view
+from app import user,view,admin
 from flask_cors import CORS
 
 def create_app():
@@ -20,6 +20,7 @@ def create_app():
     # 注册蓝图
     app.register_blueprint(user.app)
     app.register_blueprint(view.app)
+    app.register_blueprint(admin.app)
     return app
 
 if __name__ == '__main__':

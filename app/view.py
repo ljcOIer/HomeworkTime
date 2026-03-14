@@ -1,4 +1,4 @@
-# view.py
+# view.py - 前端页面展示
 from flask import Blueprint, render_template_string, render_template, request, redirect, session, Response, jsonify
 from flask_cors import CORS
 from app.database import *
@@ -19,7 +19,7 @@ def basic():
 def login():
     if verify_cookies(request.cookies):
         return redirect('/tasklist')
-    school_list = SchoolListDATA.value
+    school_list = list(SchoolList.value)
     identity_param = request.args.get('identity')
     default_selected_school = "广州市第七中学"
     return render_template('Login.html', SchoolList=school_list, default_school=default_selected_school,identity=identity_param,error="")
@@ -28,10 +28,16 @@ def login():
 def tasklist():
     if not verify_cookies(request.cookies):
         return redirect('/')
-    return render_template('TaskList.html')
+    return render_template('TaskList.html',user_identity=get_identity(request.cookies))
 
 @app.route('/task/<task_id>')
 def task_detail(task_id):
     if not verify_cookies(request.cookies):
         return redirect('/')
-    return render_template('TaskInformation.html', task_id=task_id)
+    return render_template('TaskInformation.html', task_id=task_id,user_identity=get_identity(request.cookies))
+
+@app.route('/about')
+def about():
+    if not verify_cookies(request.cookies):
+        return render_template('about.html',user_identity=get_identity(request.cookies),fk=0)
+    return render_template('about.html',user_identity=get_identity(request.cookies),fk=1)

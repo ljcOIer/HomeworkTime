@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>数学建模过程简介 | 作业时间估算</title>
+<link rel="stylesheet" href="/css/bootstrap.min.css" crossorigin="anonymous">
+<script src="/js/bootstrap.min.js" crossorigin="anonymous"></script>
+    <style>
+        .padding-individual {
+            padding-top: 40px;    /* 文字与上边框距离 */
+            padding-right: 20px;  /* 文字与右边框距离 */
+            padding-bottom: 20px; /* 文字与下边框距离 */
+            padding-left: 20px;   /* 文字与左边框距离 */
+        }
+    </style>
+     <script src="/echarts/echarts.js"></script>
+</head>
+<body>
+    <nav class="navbar navbar-default">
+        <div class="row">
+            <div class="col-md-3"></div>
+            <div class="col-md-6">
+                <div class="container-fluid">
+                    <div class="navbar-header">
+                    <a class="navbar-brand" href="/">
+                        <img alt="Brand" src="/img/logo.png" style="height: 25px;">
+                    </a>
+                    <p class="navbar-text navbar-left">作业时间估算</p>
+                    </div>
+                    <ul class="nav navbar-nav navbar-right">
+                        {% if user_identity %}
+                            <li><a href="/admin">管理</a></li>
+                        {% endif %}
+                        {% if fk %}
+                            <li><a href="/user/logout">登出</a></li>
+                        {% else %}
+                            <li><a href="/login">登录</a></li>
+                        {% endif %}
+                    </ul>
+                </div>
+            </div>
+            <div class="col-md-3"></div>
+        </div>
+        
+    </nav>
+
+    <div class="col-md-3"></div>
+    <div class="col-md-6">
+        <h2>关于网站</h2>
+        本网站由广州市第七中学的学生开发，旨在帮助学生更好地管理和估算作业时间。我们希望通过这个平台，学生们能够更高效地安排学习时间，提高学习效率。
+        <h3>功能介绍</h3>
+        <ul>
+            <li><strong>作业时间估算：</strong>学生可以输入作业的类型和难度，系统会根据历史数据和算法模型给出一个合理的时间估算。</li>
+            <li><strong>任务列表：</strong>学生可以查看自己当前的作业任务列表，了解每个任务的截止日期和预计完成时间。</li>
+            <li><strong>管理界面：</strong>管理员可以通过后台管理界面查看所有用户的作业数据，进行数据分析和优化算法。</li>
+        </ul>
+        <h3>技术栈</h3>
+        本网站使用了以下技术：
+        <ul>
+            <li><strong>前端：</strong>HTML、CSS、Bootstrap</li>
+            <li><strong>后端：</strong>Python、Flask</li>
+        </ul>
+        <h2>建模结果</h2>
+        以下是我们通过分析数据的到的一些结果:(以下内容暂时为随机数据)
+        <h3>线性拟合</h3>
+        即字数与时间的关系。找同一同学对不同文本阅读，测时间与字数。对不同文本进行抄写，测时间与字数。
+        <div id="1" style="width: 600px;height:400px;"></div>
+        <h3>难度与时间</h3>
+        对于大多数题型来说，时间与题型、同学本科实力、难度大小有关。这需要分类讨论。对于同一题型，难度越大，时间越长。
+        <div id="2" style="width: 600px;height:400px;"></div>
+        <h3>学生平均写字、读题时间与学生平均实力</h3>
+        对于每个学生，平均写字速度和读题速度简单看成与平均实力（即所有考试的总分平均分）的关系。
+        <div id="3" style="width: 600px;height:400px;"></div>
+        <h3>学生思考时间倍数计算</h3>
+        学生思考时间倍数与 学生实力与思考时间平均拟合班级实力的倍数 有关。
+        <div id="4" style="width: 600px;height:400px;"></div>
+        <h3>卷子难度分布</h3>
+        对于一张试卷，相同题型的难度与题号一般按非线性上升。估测这个分布情况。
+        <div id="5" style="width: 600px;height:400px;"></div>
+
+
+    <script type="text/javascript">
+      var myChart = echarts.init(document.getElementById('1'));
+      option = {
+        xAxis: {
+            type: 'value',
+        },
+        yAxis: {
+            type: 'value'
+        },
+        series: [
+            {
+            data: [0, 10, 20, 30, 40, 50, 60],
+            type: 'line',
+            smooth: true
+            }
+        ]
+        };
+      myChart.setOption(option);
+    </script>
+    <script type="text/javascript">
+      var myChart = echarts.init(document.getElementById('2'));
+      option = {
+        xAxis: {
+            type: 'category',
+        },
+        yAxis: {
+            type: 'value'
+        },
+        series: [
+            {
+            data: [110, 115, 120, 130, 150, 180, 300, 500, 1500],
+            type: 'line',
+            smooth: true
+            }
+        ]
+        };
+
+      // 使用刚指定的配置项和数据显示图表。
+      myChart.setOption(option);
+    </script>
+    <script type="text/javascript">
+      var myChart = echarts.init(document.getElementById('3'));
+      option = {
+        xAxis: {
+            type: 'category',
+        },
+        yAxis: {
+            type: 'value'
+        },
+        series: [
+            {
+            data: [100, 117, 130, 141, 150, 159, 165, 176, 200],
+            type: 'line',
+            smooth: true
+            }
+        ]
+        };
+
+      // 使用刚指定的配置项和数据显示图表。
+      myChart.setOption(option);
+    </script>
+    <script type="text/javascript">
+      var myChart = echarts.init(document.getElementById('4'));
+      option = {
+        xAxis: {
+            type: 'category',
+        },
+        yAxis: {
+            type: 'value'
+        },
+        series: [
+            {
+            data: [90, 110, 127, 141, 150, 159, 180, 200, 230],
+            type: 'line',
+            smooth: true
+            }
+        ]
+        };
+
+      // 使用刚指定的配置项和数据显示图表。
+      myChart.setOption(option);
+    </script>
+    <script type="text/javascript">
+      var myChart = echarts.init(document.getElementById('5'));
+      option = {
+        xAxis: {
+            type: 'category',
+        },
+        yAxis: {
+            type: 'value'
+        },
+        series: [
+            {
+            data: [10, 11, 12, 13, 15, 20, 50, 70,11, 11, 12, 15, 20, 30, 60, 70,10, 11, 12, 15, 20, 50, 80, 100],
+            type: 'line',
+            smooth: true
+            }
+        ]
+        };
+
+      // 使用刚指定的配置项和数据显示图表。
+      myChart.setOption(option);
+    </script>
+        <footer>
+        <hr>
+        <p>&copy; 2026 广州市第七中学. 保留所有权利.</p>
+    </footer>
+    </div>
+    <div class="col-md-3"></div>
+</body>
+</html>

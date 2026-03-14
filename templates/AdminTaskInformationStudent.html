@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>管理任务明细 | 作业时间估算</title>
+<link rel="stylesheet" href="/css/bootstrap.min.css" crossorigin="anonymous">
+<script src="/js/bootstrap.min.js" crossorigin="anonymous"></script>
+    <style>
+        .padding-individual {
+            padding-top: 40px;    /* 文字与上边框距离 */
+            padding-right: 20px;  /* 文字与右边框距离 */
+            padding-bottom: 20px; /* 文字与下边框距离 */
+            padding-left: 20px;   /* 文字与左边框距离 */
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-default">
+        <div class="row">
+            <div class="col-md-3"></div>
+            <div class="col-md-6">
+                <div class="container-fluid">
+                    <div class="navbar-header">
+                    <a class="navbar-brand" href="/">
+                        <img alt="Brand" src="/img/logo.png" style="height: 25px;">
+                    </a>
+                    <p class="navbar-text navbar-left">作业时间估算</p>
+                    </div>
+                    <ul class="nav navbar-nav navbar-right">
+                        <li><a href="/admin">管理</a></li>
+                        <li><a href="/user/logout">登出</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-md-3"></div>
+        </div>
+        
+    </nav>
+
+    <div class="col-md-3"></div>
+    <div class="col-md-6">
+        <h3 class="list-group-item-heading">查看 {{task_id}} 班级学生作业时间预估明细 - {{grade}} 年级 {{cls}} 班 : {{Sub}}</h3>
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th></th>
+                    <th>作业编号</th>
+                </tr>
+                <tr>
+                    <th>学号</th>
+                    <th>学生名字</th>
+                    {% for i in range(lenn) %}
+                    <th>{{i}}</th>
+                    {%endfor %}
+                    <th>总计</th>
+                </tr>
+            </thead>
+            <tbody>
+                {%for i in task_list%}
+                <tr>
+                    {%for j in i%}
+                    <td>{{j}}</td>
+                    {%endfor%}
+                </tr>
+                {%endfor%}
+                
+            </tbody>
+        </table>
+        
+
+        <div style="text-align: center;">
+            <a href="/admin/task/{{task_id}}/information/{{grade}}/{{cls}}/{{sub}}" class="btn btn-default">返回上一页</a>
+        </div>
+
+        <footer>
+        <hr>
+        <p>&copy; 2026 广州市第七中学. 保留所有权利.</p>
+    </footer>
+    </div>
+    <div class="col-md-3"></div>
+</body>
+</html>

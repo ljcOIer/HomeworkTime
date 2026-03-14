@@ -1,3 +1,4 @@
+# data_tool.py - 数据库函数与辅助函数
 import json
 from io import *
 import random
@@ -12,7 +13,6 @@ def encrypt(content: str) -> str:
     """
     简化版MD5加密函数 仅支持字符串输入 返回32位16进制字符串
     """
-    # 将字符串转为UTF-8编码的字节串，计算MD5并返回16进制结果
     return hashlib.md5(content.encode('utf-8')).hexdigest()
 
 class s: # 数据库函数
@@ -30,14 +30,27 @@ class s: # 数据库函数
     def add(self,a,b):
         self.value[a] = b
         self.text = json.dumps(self.value)
-    def upd(self): # 此功能感觉多此一举，不应该使用
-        print("1")
-        self.text = json.dumps(self.value)
     def update(self):
         self.text = json.dumps(self.value)
         op = open("./data/"+self.name+".json",'w',encoding="utf-8")
         op.write(self.text)
         op.close()
 
+def time_str(minn): # 分钟转字符串
+    """
+    一小时 = 60 min
+    一天   = 24h  = 1440 min
+    """
+    ans = ""
+    if(minn>=1440):
+        ans+="{} 天 ".format(minn//1440)
+        minn=minn%1440
+    if(minn>=60):
+        ans+="{} 小时 ".format(minn//60)
+        minn=minn%60
+    if(minn>=1):
+        ans+="{} 分钟 ".format(minn)
+    return ans
+
 if __name__=="__main__":
-    pass
+    print(time_str(1919810))

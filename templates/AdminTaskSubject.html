@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>管理假期任务 | 作业时间估算</title>
+<link rel="stylesheet" href="/css/bootstrap.min.css" crossorigin="anonymous">
+<script src="/js/bootstrap.min.js" crossorigin="anonymous"></script>
+    <style>
+        .padding-individual {
+            padding-top: 40px;    /* 文字与上边框距离 */
+            padding-right: 20px;  /* 文字与右边框距离 */
+            padding-bottom: 20px; /* 文字与下边框距离 */
+            padding-left: 20px;   /* 文字与左边框距离 */
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-default">
+        <div class="row">
+            <div class="col-md-3"></div>
+            <div class="col-md-6">
+                <div class="container-fluid">
+                    <div class="navbar-header">
+                    <a class="navbar-brand" href="/">
+                        <img alt="Brand" src="/img/logo.png" style="height: 25px;">
+                    </a>
+                    <p class="navbar-text navbar-left">作业时间估算</p>
+                    </div>
+                    <ul class="nav navbar-nav navbar-right">
+                        <li><a href="/admin">管理</a></li>
+                        <li><a href="/user/logout">登出</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-md-3"></div>
+        </div>
+        
+    </nav>
+
+    <div class="col-md-3"></div>
+    <div class="col-md-6">
+        <h2 class="list-group-item-heading">管理假期任务 {{ task_id }} - 按学科分类编辑</h2>
+        <ul class="nav nav-tabs">
+            <li role="presentation" {% if sub=="chinese" %}class="active"{% endif %}><a href="/admin/task/{{task_id}}/subject/chinese">语文</a></li>
+            <li role="presentation" {% if sub=="maths" %}class="active"{% endif %}><a href="/admin/task/{{task_id}}/subject/maths">数学</a></li>
+            <li role="presentation" {% if sub=="english" %}class="active"{% endif %}><a href="/admin/task/{{task_id}}/subject/english">英语</a></li>
+            <li role="presentation" {% if sub=="physics" %}class="active"{% endif %}><a href="/admin/task/{{task_id}}/subject/physics">物理</a></li>
+            <li role="presentation" {% if sub=="history" %}class="active"{% endif %}><a href="/admin/task/{{task_id}}/subject/history">历史</a></li>
+            <li role="presentation" {% if sub=="chemistry" %}class="active"{% endif %}><a href="/admin/task/{{task_id}}/subject/chemistry">化学</a></li>
+            <li role="presentation" {% if sub=="biology" %}class="active"{% endif %}><a href="/admin/task/{{task_id}}/subject/biology">生物</a></li>
+            <li role="presentation" {% if sub=="politics" %}class="active"{% endif %}><a href="/admin/task/{{task_id}}/subject/politics">政治</a></li>
+            <li role="presentation" {% if sub=="geography" %}class="active"{% endif %}><a href="/admin/task/{{task_id}}/subject/geography">地理</a></li>
+            <li role="presentation" {% if sub=="other" %}class="active"{% endif %}><a href="/admin/task/{{task_id}}/subject/other">其他</a></li>
+        </ul>
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>年级</th>
+                    <th>班级</th>
+                    <th>内容</th>
+                    <th>班级平均作业用时</th>
+                    <th>是否显示</th>
+                    <th>操作</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for i in task_list %}
+                <tr>
+                    <td>{{i[5]}}</td>
+                    <td>{{i[1]}}</td>
+                    <td>{{i[2]|safe}}</td>
+                    <td>{{i[3]}}</td>
+                    <td>{{i[4]}}</td>
+                    <td><a href="/admin/task/{{task_id}}/information/{{i[0]}}/{{i[1]}}/{{sub}}" class="btn btn-xs btn-primary">编辑</a> 
+                        <a href="#" class="btn btn-xs btn-info">整改</a> 
+                        <a href="#" class="btn btn-xs btn-warning">隐藏</a>
+                    </td>
+                </tr>
+                {% endfor %}
+                
+            </tbody>
+        </table>
+        <div style="text-align: center;">
+            <a href="/admin/tasks" class="btn btn-default">返回上一页</a>
+        </div>
+
+        <footer>
+        <hr>
+        <p>&copy; 2026 广州市第七中学. 保留所有权利.</p>
+    </footer>
+    </div>
+    <div class="col-md-3"></div>
+</body>
+</html>

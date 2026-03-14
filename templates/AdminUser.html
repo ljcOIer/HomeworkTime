@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>用户管理 | 作业时间估算</title>
+<link rel="stylesheet" href="/css/bootstrap.min.css" crossorigin="anonymous">
+<script src="/js/bootstrap.min.js" crossorigin="anonymous"></script>
+    <style>
+        .padding-individual {
+            padding-top: 40px;    /* 文字与上边框距离 */
+            padding-right: 20px;  /* 文字与右边框距离 */
+            padding-bottom: 20px; /* 文字与下边框距离 */
+            padding-left: 20px;   /* 文字与左边框距离 */
+        }
+    </style>
+    <style>
+        /* 弹窗遮罩层（灰色区域） */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.1); /* 半透明灰色 */
+            display: none; /* 默认隐藏 */
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* 弹窗表单容器 */
+        .modal-form {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            width: 300px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        }
+        .modal-form p {
+            margin: 0 0 15px 0;
+            font-weight: bold;
+        }
+        .modal-form input {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 15px;
+            box-sizing: border-box;
+        }
+        .modal-form button {
+            padding: 8px 16px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-default">
+        <div class="row">
+            <div class="col-md-3"></div>
+            <div class="col-md-6">
+                <div class="container-fluid">
+                    <div class="navbar-header">
+                    <a class="navbar-brand" href="/">
+                        <img alt="Brand" src="/img/logo.png" style="height: 25px;">
+                    </a>
+                    <p class="navbar-text navbar-left">作业时间估算</p>
+                    </div>
+                    <ul class="nav navbar-nav navbar-right">
+                        <li><a href="/admin">管理</a></li>
+                        <li><a href="/user/logout">登出</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-md-3"></div>
+        </div>
+        
+    </nav>
+
+    <div class="col-md-3"></div>
+    <div class="col-md-6">
+        <h2 class="list-group-item-heading">用户管理 - <a href="#" class="btn btn-default btn-lg">批量添加用户</a>
+                <a href="#" class="btn btn-default btn-lg">下载用户数据</a></h2>
+        <ul class="nav nav-tabs">
+            {% for x in gradelist %}
+            <li role="presentation" {% if grade==x[0] %}class="active"{% endif %}><a href="/admin/user/{{ x[0] }}/1">{{ x[1] }}</a></li>
+            {% endfor %}
+        </ul>
+        <ul class="nav nav-tabs">
+            {% for x in classlist %}
+            <li role="presentation" {% if cls==x %}class="active"{% endif %}><a href="/admin/user/{{grade}}/{{x}}">{{x}}</a></li>
+            {% endfor %}
+        </ul>
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>学号(id)</th>
+                    <th>姓名</th>
+                    <th>平均能力分</th>
+                    <th>密码</th>
+                    <th>操作</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for x in userlist %}
+                <tr>
+                    {% for y in x %}
+                    <td>{{y}}</td>
+                    {% endfor %}
+                    <td><button class="btn btn-xs btn-primary action-btn" data-btn-name="{{x[0]}}">修改密码</button>
+                        </td>
+                </tr>
+                {% endfor %}
+                
+            </tbody>
+        </table>
+        <div style="text-align: center;">
+            <a href="/admin" class="btn btn-default">返回上一页</a>
+        </div>
+
+        <footer>
+        <hr>
+        <p>&copy; 2026 广州市第七中学. 保留所有权利.</p>
+    </footer>
+    </div>
+    <div class="col-md-3"></div>
+
+
+    <div class="modal-overlay" id="modalOverlay">
+        <div class="modal-form" id="modalForm">
+            <p id="btnNameText"></p>
+            <input type="text" id="contentInput" placeholder="输入修改密码">
+            <button id="submitBtn">提交</button>
+        </div>
+    </div>
+
+    <script>
+        // 获取核心元素
+        const btnList = document.querySelectorAll('.action-btn');
+        const modalOverlay = document.getElementById('modalOverlay');
+        const modalForm = document.getElementById('modalForm');
+        const btnNameText = document.getElementById('btnNameText');
+        const contentInput = document.getElementById('contentInput');
+        const submitBtn = document.getElementById('submitBtn');
+
+        // 存储当前点击的按钮名称
+        let currentBtnName = '';
+
+        // 为每个按钮绑定点击事件
+        btnList.forEach(btn => {
+            btn.addEventListener('click', function() {
+                // 获取按钮名称（从data属性读取）
+                currentBtnName = this.getAttribute('data-btn-name');
+                // 更新弹窗内的按钮名称文本
+                btnNameText.innerHTML = `请修改用户 ${currentBtnName} 的密码:`;
+                // 清空输入框
+                contentInput.value = '';
+                // 显示弹窗（设置flex布局）
+                modalOverlay.style.display = 'flex';
+            });
+        });
+
+        // 点击遮罩层（灰色区域）关闭弹窗
+        modalOverlay.addEventListener('click', function(e) {
+            // 只有点击遮罩层本身（而非表单内部）才关闭
+            if (e.target === modalOverlay) {
+                modalOverlay.style.display = 'none';
+            }
+        });
+
+        // 提交按钮点击事件（适配后端form-data接收、文本返回）
+        submitBtn.addEventListener('click', async function() {
+            // 获取输入内容
+            const inputContent = contentInput.value.trim();
+            if (!inputContent) {
+                alert('请输入内容后再提交！');
+                return;
+            }
+
+            try {
+                // 构建form-data格式数据（适配后端request.form.get）
+                const formData = new FormData();
+                formData.append('id', currentBtnName); // 对应后端user_id = request.form.get('id')
+                formData.append('password', inputContent); // 对应后端password = request.form.get('password')
+
+                // 发送POST请求到后端接口
+                const response = await fetch('/admin/user/setpassword/{{grade}}/{{cls}}', {
+                    method: 'POST',
+                    body: formData // 无需设置Content-Type，浏览器自动处理为multipart/form-data
+                });
+
+                // 处理响应结果（后端直接输出文本，无需解析JSON）
+                const responseText = await response.text();
+                if (response.ok) {
+                    // 提交成功：提示后端返回的文本 + 基础信息
+                    alert(`提交成功！${responseText}`);
+                    modalOverlay.style.display = 'none'; // 关闭弹窗
+                    location.reload()
+                } else {
+                    // 提交失败：提示状态码 + 后端返回的错误文本
+                    alert(`提交失败 [${response.status}]：${responseText}`);
+                }
+            } catch (error) {
+                // 处理网络错误等异常
+                alert(`提交出错：${error.message}`);
+                console.error('POST请求错误：', error); // 控制台打印详细错误
+            }
+        });
+    </script>
+</body>
+</html>

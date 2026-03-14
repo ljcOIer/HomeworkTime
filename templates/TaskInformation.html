@@ -31,7 +31,9 @@
                     </a><p class="navbar-text navbar-left">作业时间估算</p>
                     </div>
                     <ul class="nav navbar-nav navbar-right">
-                        <li><a href="#">管理</a></li>
+                        {% if user_identity %}
+                            <li><a href="/admin">管理</a></li>
+                        {% endif %}
                         <li><a href="/user/logout">登出</a></li>
                     </ul>
                 </div>
@@ -98,6 +100,10 @@
                 <p class="list-group-item-text">1. 卷子</p>
             </div>
         </div>
+        <div style="text-align: center;">
+            <a href="/tasklist" class="btn btn-default">返回上一页</a>
+        </div>
+        
         
         <footer>
         <hr>
